@@ -4,6 +4,7 @@ import { Box } from './Box';
 import { ColorPicker } from 'components/ColorPicker';
 import TodoList from 'components/TodoList';
 import { Component } from 'react';
+import Form from './Form';
 
 const colorPickerOptions = [
   { label: 'red', color: '#F44336' },
@@ -29,6 +30,18 @@ export class App extends Component {
     }));
   };
 
+  formSubmitHandler = data => {
+    console.log(data);
+  };
+
+  onToggleCompleted = todoId => {
+    this.setState(({ todos }) => ({
+      todos: todos.map(todo =>
+        todo.id === todoId ? { ...todo, completed: !todo.completed } : todo
+      ),
+    }));
+  };
+
   render() {
     const { todos } = this.state;
     return (
@@ -36,7 +49,12 @@ export class App extends Component {
         <Counter initialValue={10}></Counter>
         <Dropdown />
         <ColorPicker options={colorPickerOptions} />
-        <TodoList todos={todos} onDeleteTodo={this.deleteTodo} />
+        <TodoList
+          todos={todos}
+          onDeleteTodo={this.deleteTodo}
+          onToggleCompleted={this.onToggleCompleted}
+        />
+        <Form onSubmit={this.formSubmitHandler}></Form>
       </Box>
     );
   }

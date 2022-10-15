@@ -5,6 +5,7 @@ import { ColorPicker } from 'components/ColorPicker';
 import TodoList from 'components/TodoList';
 import { Component } from 'react';
 import Form from './Form';
+import shortid from 'shortid';
 
 const colorPickerOptions = [
   { label: 'red', color: '#F44336' },
@@ -22,6 +23,18 @@ export class App extends Component {
       { id: 'id-2', text: 'Разобраться с React Router', completed: false },
       { id: 'id-3', text: 'Пережить Redux', completed: false },
     ],
+  };
+
+  addTodo = text => {
+    const todo = {
+      id: shortid.generate(),
+      text,
+      completed: false,
+    };
+
+    this.setState(({ todos }) => ({
+      todos: [todo, ...todos],
+    }));
   };
 
   deleteTodo = id => {
